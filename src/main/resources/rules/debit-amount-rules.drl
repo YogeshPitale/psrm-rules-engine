@@ -1,17 +1,17 @@
-import com.wf.rules.domain.CustomRules;
-global com.wf.rules.domain.RulesList rulesList;
+import com.wf.rules.domain.TransactionDetails;
+global com.wf.rules.domain.TransactionStatus transactionStatus;
 
 dialect "mvel"
 
 rule "Dynamic Amount based rule"
 	when
-		c : CustomRules(debitAmt > dynamicAmount)
+		c : TransactionDetails(debitAmt > dynamicAmount)
 	then
-		rulesList.setList("Debit Amount is greater than Threshold: $" + c.getDynamicAmount)
+		transactionStatus.addOnHoldReason("Debit Amount is greater than Threshold: $" + c.getDynamicAmount)
 end
 rule "Throttle Max Available based rule"
 	when
-		c : CustomRules(debitAmt > (cap*throttleMaxAvailable))
+		c : TransactionDetails(debitAmt > (cap*throttleMaxAvailable))
 	then
-		rulesList.setList("Debit Amount is greater than "+(c.getThrottleMaxAvailable*100)+"% of Cap")
+		transactionStatus.addOnHoldReason("Debit Amount is greater than "+(c.getThrottleMaxAvailable*100)+"% of Cap")
 end

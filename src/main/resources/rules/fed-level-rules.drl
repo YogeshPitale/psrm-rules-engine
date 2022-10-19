@@ -1,11 +1,11 @@
-import com.wf.rules.domain.CustomRules;
-global com.wf.rules.domain.RulesList rulesList;
+import com.wf.rules.domain.TransactionDetails;
+global com.wf.rules.domain.TransactionStatus transactionStatus;
 
 dialect "mvel"
 
 rule "Throttle Value based rule"
 	when
-		CustomRules(throttleValue)
+		TransactionDetails(throttleValue)
 	then
-		rulesList.setList("Throttling is On")
+		transactionStatus.addOnHoldReason("Fed level throttling is On")
 end

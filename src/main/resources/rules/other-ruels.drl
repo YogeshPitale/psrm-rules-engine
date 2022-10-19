@@ -1,17 +1,17 @@
-import com.wf.rules.domain.CustomRules;
-global com.wf.rules.domain.RulesList rulesList;
+import com.wf.rules.domain.TransactionDetails;
+global com.wf.rules.domain.TransactionStatus transactionStatus;
 
 dialect "mvel"
 
 rule "Counterparty name based rule"
 	when
-		CustomRules(nm=="CITI")
+		TransactionDetails(nm=="CITI")
 	then
-		rulesList.setList("Transaction for CITI are kept on hold")
+		transactionStatus.addOnHoldReason("Transaction for CITI are kept on hold")
 end
 rule "Payment Rail based rule"
 	when
-		CustomRules(pmtRail=="RTL")
+		TransactionDetails(pmtRail=="RTL")
 	then
-		rulesList.setList("All retail transactions kept on hold")
+		transactionStatus.addOnHoldReason("All retail transactions kept on hold")
 end

@@ -3,11 +3,13 @@ package com.wf.rules.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @Getter
 @Setter
-public class CustomRules {
+@ToString
+public class TransactionDetails {
 	private String nm;
 	private String pmtRail;
 	private Boolean throttleValue;
